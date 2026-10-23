@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인터메카 고객센터</title>
+<style>
+  :root { --bg:#f6f5f1; --card:#ffffff; --ink:#1f1d1a; --sub:#6b665e; --line:#e3e0d8; --kakao:#fee500; --kakao-ink:#191600; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17161a; --card:#222126; --ink:#f1efe9; --sub:#a8a39a; --line:#34323a; }
+  }
+  * { box-sizing:border-box; }
+  html,body { height:100%; margin:0; }
+  body { background:var(--bg); color:var(--ink); font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; gap:18px; }
+  h1 { font-size:22px; margin:0; font-weight:700; }
+  p.lead { margin:4px 0 0; color:var(--sub); font-size:14px; text-align:center; }
+  .row { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; width:280px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .panel h2 { margin:0; font-size:17px; }
+  .panel p { margin:0; color:var(--sub); font-size:13px; text-align:center; min-height:36px; }
+  .qr { width:170px; height:170px; background:#fff; padding:8px; border-radius:6px; display:flex; align-items:center; justify-content:center; }
+  .qr img, .qr canvas { max-width:100%; height:auto; }
+  a.btn { display:block; width:100%; text-align:center; text-decoration:none; background:var(--kakao); color:var(--kakao-ink); font-weight:700; font-size:15px; padding:12px; border-radius:8px; }
+  a.btn:hover { filter:brightness(.95); }
+  a.btn:focus-visible { outline:3px solid var(--ink); outline-offset:2px; }
+  .hint { font-size:12px; color:var(--sub); }
+</style>
+</head>
+<body>
+  <div>
+    <h1>인터메카 고객센터</h1>
+    <p class="lead">불편사항, 이벤트, 이용 문의를 남겨주세요. 처리 결과도 여기서 알려드려요.</p>
+  </div>
+
+  <div class="row">
+    <section class="panel">
+      <h2>채널 추가</h2>
+      <p>추가하면 이벤트와 개선 소식을 받아볼 수 있어요.</p>
+      <div class="qr" id="qr-channel"></div>
+      <a class="btn" id="btn-channel" target="_blank" rel="noopener">채널 추가하기</a>
+    </section>
+
+    <section class="panel">
+      <h2>채팅 문의</h2>
+      <p>불편사항이나 궁금한 점을 바로 보내주세요.</p>
+      <div class="qr" id="qr-chat"></div>
+      <a class="btn" id="btn-chat" target="_blank" rel="noopener">채팅 문의하기</a>
+    </section>
+  </div>
+  <div class="hint">PC에서는 버튼을 누르고, 휴대폰으로는 QR을 스캔하세요.</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // ▼▼ 여기 두 주소만 본인 채널 주소로 바꾸세요 ▼▼
+  var CHANNEL_URL = "http://pf.kakao.com/_edIxkG";       // 채널 프로필 주소
+  var CHAT_URL    = "http://pf.kakao.com/_edIxkG/chat";  // 1:1 채팅 주소
+  // ▲▲ ----------------------------------------- ▲▲
+
+  document.getElementById("btn-channel").href = CHANNEL_URL;
+  document.getElementById("btn-chat").href = CHAT_URL;
+
+  function makeQR(id, url) {
+    try {
+      new QRCode(document.getElementById(id), { text:url, width:154, height:154, correctLevel:QRCode.CorrectLevel.M });
+    } catch (e) {
+      document.getElementById(id).textContent = "QR 표시 불가";
+    }
+  }
+  makeQR("qr-channel", CHANNEL_URL);
+  makeQR("qr-chat", CHAT_URL);
+</script>
+</body>
+</html>
